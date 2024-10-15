@@ -1,0 +1,64 @@
+Table activity {
+  id int [PK]
+  products int
+}
+
+Table buyer {
+  id int [PK]
+  location int
+  transactions int
+  reviews int
+}
+
+Table location {
+  id int [PK]
+  products int
+  buyers int
+}
+
+Table review {
+  id int [PK]
+  buyer int
+  product int
+}
+
+Table order {
+  id int [PK]
+  items int
+  buyer int
+}
+
+Table order_item {
+  id int [PK]
+  product int
+  transaction int
+}
+
+Table product {
+  id int [PK, unique, default: 0001]
+  name varchar [unique, not null]
+  photo_link varchar [unique]
+  strapline varchar [not null]
+  description varchar [not null]
+  stock_level int [not null]
+  location int /* not null */
+  orders int /* not null */
+  reviews int
+  activities int /* not null */
+}
+
+Ref: "location"."buyers" < "buyer"."id"
+
+Ref: "product"."location" < "location"."id"
+
+Ref: "order_item"."product" > "product"."id"
+
+Ref: "review"."product" > "product"."id"
+
+Ref: "order_item"."transaction" > "order"."id"
+
+Ref: "order"."buyer" < "buyer"."id"
+
+Ref: "product"."activities" <> "activity"."id"
+
+Ref: "review"."buyer" > "buyer"."id"
