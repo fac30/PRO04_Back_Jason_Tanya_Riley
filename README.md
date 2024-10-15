@@ -2,6 +2,26 @@
 
 > Premier purveyors of playful paraphenalia
 
+## Setup
+
+- Step 1: Install dependencies:
+
+```zsh
+	npm install
+```
+
+- Step 2: Start the development server:
+
+```zsh
+	npm run dev
+```
+
+- Step 3: Build for production:
+
+```zsh
+	npm run build
+```
+
 ## Project Structure
 
 ```
