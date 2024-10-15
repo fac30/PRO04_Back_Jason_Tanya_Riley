@@ -4,6 +4,9 @@
 const express = require('express');
 const cors = require('cors');
 
+
+require('./models/dbInit'); // This will execute the schema.sql and create tables
+
 const app = express();
 
 // Enable All CORS Requests
