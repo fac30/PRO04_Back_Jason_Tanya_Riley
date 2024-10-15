@@ -17,17 +17,16 @@ Craft-Craft/
 │   ├── routes/            # Define API routes
 │   │   └── itemRoutes.js
 │   │
-│   ├── middleware/        # Custom middleware (auth, validation, etc.)
-│   │   └── logger.js
-│   │
+|   ├── db/                 # SQLite database file
+|   |    |__crafts_db.sqlite
+|   |
 │   ├── config/            # Configuration (e.g., database connection)
 │   │   └── db.js
-│
-├── db/                    # SQLite database file
-│   └── mydatabase.sqlite
-│
-├── app.js                 # Main Express app setup
-├── server.js              # Start the server
+│   ├── app.js                 # Main Express app setup
+|   ├── server.js              # Start the server
+|
+|── dist/
+|
 ├── node_modules/          # Dependencies (installed by npm)
 ├── package.json           # Project metadata and dependencies
 ├── package-lock.json      # Lock file for dependencies

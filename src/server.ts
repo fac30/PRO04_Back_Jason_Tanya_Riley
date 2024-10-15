@@ -1,7 +1,7 @@
 // server.js
-const app = require('./app');
+import app from './app'; 
 
-const port = process.env.PORT || 3000;
+const port: number = parseInt(process.env.PORT || '3000', 10);
 
 // Start the server
 app.listen(port, () => {
