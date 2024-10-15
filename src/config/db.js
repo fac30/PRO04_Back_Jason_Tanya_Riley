@@ -1,17 +1,12 @@
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-// open database in memory
-let db = new sqlite3.Database(':memory:', (err) => {
+// Open a persistent database stored in the 'db' directory
+let db = new sqlite3.Database(path.resolve(__dirname, '../db/crafts_db.sqlite'), (err) => {
   if (err) {
     return console.error(err.message);
   }
-  console.log('Connected to the in-memory SQlite database.');
+  console.log('Connected to the persistent SQLite database.');
 });
 
-// close the database connection
-db.close((err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log('Close the database connection.');
-});
+module.exports = db;
