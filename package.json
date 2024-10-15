@@ -4,17 +4,29 @@
   "description": "> Premier purveyors of playful paraphenalia",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@npmcli/fs": "^4.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/sqlite3": "^3.1.11",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "glob": "^11.0.0",
     "rimraf": "^6.0.1",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "copyfiles": "^2.4.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.3"
   }
 }

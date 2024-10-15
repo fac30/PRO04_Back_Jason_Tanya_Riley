@@ -1,4 +1,4 @@
 /** SQLite database interactions */ 
 
-const db = require('../config/db');
+import db from '../config/db';
 
