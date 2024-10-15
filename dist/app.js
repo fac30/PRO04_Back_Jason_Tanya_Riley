@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 require("./models/dbInit"); // Assuming this file just runs the schema.sql to create tables
+require("./models/seed");
 const app = (0, express_1.default)();
 // Enable All CORS Requests
 app.use((0, cors_1.default)());

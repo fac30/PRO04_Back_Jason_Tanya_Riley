@@ -12,3 +12,5 @@ CREATE TABLE IF NOT EXISTS dummytable (
 );
 
 COMMIT;
+
+-- WHEN "CREATE TABLE" IS FILLED, JUST RUN THE COMMAND: ts-node src/models/dbInit.ts AND EVERYTHING TABLES will be created

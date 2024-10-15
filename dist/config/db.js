@@ -7,7 +7,7 @@ const sqlite3_1 = __importDefault(require("sqlite3"));
 const path_1 = __importDefault(require("path"));
 sqlite3_1.default.verbose();
 // Open a persistent database stored in the 'db' directory
-const dbPath = path_1.default.resolve(__dirname, '../db/crafts_db.sqlite');
+const dbPath = path_1.default.resolve(__dirname, '../../db/crafts_db.sqlite');
 const db = new sqlite3_1.default.Database(dbPath, (err) => {
     if (err) {
         console.error(err.message);
