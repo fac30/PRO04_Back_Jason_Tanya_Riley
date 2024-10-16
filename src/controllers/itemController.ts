@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as ItemModel from '../models/itemModel';
 
-// Controller function to get all products
+
 export const handleGetAllProducts = async (req: Request, res: Response): Promise<void> => {
     try {
         const products = await ItemModel.getAllProducts();  // Assuming this returns an array of products
@@ -11,7 +11,7 @@ export const handleGetAllProducts = async (req: Request, res: Response): Promise
     }
 };
 
-// Controller function to get a product by ID
+
 export const handleGetProductById = async (req: Request, res: Response): Promise<void> => {
     try {
         const productId: number = Number(req.params.id); // Ensure productId is a number

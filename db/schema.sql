@@ -43,6 +43,8 @@ CREATE TABLE IF NOT EXISTS order_item (
     CONSTRAINT fk_order_item_order FOREIGN KEY ("transaction") REFERENCES "order"(id)
 );
 
+DROP TABLE IF EXISTS dummytable;
+
 CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
