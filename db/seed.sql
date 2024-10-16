@@ -1,8 +1,6 @@
 -- Required, otherwise inserting products breaks categories references
 PRAGMA foreign_keys = OFF;
 
-BEGIN;
-
 -- everything between 'BEGIN' and 'COMMIT' for now is a dummyValues for dummyTable
 
 INSERT INTO dummytable VALUES
@@ -13,9 +11,6 @@ INSERT INTO dummytable VALUES
   (5, "mess", 'tomato')
 ON CONFLICT DO NOTHING;
 
-COMMIT;
 
 -- turn this back on now we're done
 PRAGMA foreign_keys = ON;
-
--- WHEN "INSERT INTO" IS FILLED, JUST RUN THE COMMAND: ts-node src/models/seed.ts AND EVERYTHING WILL BE IN THE TABLES

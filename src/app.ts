@@ -12,6 +12,8 @@ const app: Application = express();
 // Enable All CORS Requests
 app.use(cors());
 
+app.use(express.json()); 
+
 // Define routes
 app.get('/', (req: Request, res: Response): void => {
   res.send('Successful response.');

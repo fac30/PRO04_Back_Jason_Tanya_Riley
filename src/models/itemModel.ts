@@ -1,8 +1,5 @@
-/** SQLite database interactions */ 
-import { Database } from 'sqlite3';
-
 /** SQLite database interactions */
-const db: Database = require('../config/db');
+import db from '../config/db';
 
 interface Product {
   id?: number;
