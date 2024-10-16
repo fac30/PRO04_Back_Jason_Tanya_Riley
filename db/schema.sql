@@ -1,9 +1,10 @@
 PRAGMA foreign_keys = ON;
 
 -- Create tables
+
 CREATE TABLE IF NOT EXISTS activity (
     id INTEGER PRIMARY KEY,
-    products INTEGER
+    name TEXT
 );
 
 CREATE TABLE IF NOT EXISTS buyer (
@@ -53,7 +54,7 @@ CREATE TABLE IF NOT EXISTS products (
     description TEXT NOT NULL,
     stock_level INTEGER NOT NULL,
     location INTEGER NOT NULL,
-    orders INTEGER NOT NULL,
+    orders INTEGER,
     reviews INTEGER,
     activities INTEGER NOT NULL,
     CONSTRAINT fk_product_location FOREIGN KEY (location) REFERENCES location(id),

@@ -17,6 +17,7 @@ export const handleGetProductById = async (req: Request, res: Response): Promise
         const productId: number = Number(req.params.id); // Ensure productId is a number
         const product = await ItemModel.getProductById(productId); // Assuming this returns a single product object
         if (product) {
+            console.log(product);
             res.json(product);
         } else {
             res.status(404).json({ message: 'Product not found' });
