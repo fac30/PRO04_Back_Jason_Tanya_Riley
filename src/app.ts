@@ -5,8 +5,8 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import itemRoutes from './routes/itemRoutes';
 
-import './models/dbInit';  // Assuming this file just runs the schema.sql to create tables
-import './models/seed';    // seeding the tables
+import './models/dbInit';
+import './models/seed';
 
 const app: Application = express();
 
@@ -21,6 +21,5 @@ app.use('/', itemRoutes);
 app.get('/', (req: Request, res: Response): void => {
   res.send('Successful response.');
 });
-
 
 export default app;
