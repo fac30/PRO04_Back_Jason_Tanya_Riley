@@ -15,10 +15,11 @@ CREATE TABLE IF NOT EXISTS buyer (
     CONSTRAINT fk_buyer_location FOREIGN KEY (location) REFERENCES location(id)
 );
 
+-- DROP TABLE IF EXISTS location;
+
 CREATE TABLE IF NOT EXISTS location (
     id INTEGER PRIMARY KEY,
-    products INTEGER,
-    buyers INTEGER
+    country TEXT
 );
 
 CREATE TABLE IF NOT EXISTS review (
