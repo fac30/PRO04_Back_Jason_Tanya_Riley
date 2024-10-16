@@ -5,8 +5,9 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import itemRoutes from './routes/itemRoutes';
 
-import './models/dbInit';
-import './models/seed';
+// Uncomment the lines below if you need to create new tables or seed the database
+// import './models/dbInit';
+// import './models/seed';
 
 const app: Application = express();
 
