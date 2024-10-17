@@ -30,9 +30,9 @@ db
 └── seed.sql
 ```
 
-### Folders
+## Folders
 
-#### `db/`
+### `db/`
 
 The db folder contains all files related to the database, including scripts for schema definition, database seeding, and the actual database file.
 
@@ -41,7 +41,7 @@ The db folder contains all files related to the database, including scripts for 
 - `schema.sql`: SQL script that defines the schema for the database, creating the necessary tables.
 - `seed.sql`: SQL script that contains seed data, used to populate the database with initial data for testing or development purposes.
 
-#### `src/`
+### `src/`
 
 The src directory contains all the main source files for the project. It is structured into subfolders such as config, controllers, models, routes, and files that initialize the server.
 
