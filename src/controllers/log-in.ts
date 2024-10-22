@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 //import function where is checking that email is exist in table
 
 export const logIn = async (req: Request, res: Response): Promise<void> => {

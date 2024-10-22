@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 // Import model function to insert user in the table
 
 export const signUp = async (req: Request, res: Response): Promise<void> => {
