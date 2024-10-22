@@ -1,4 +1,4 @@
-/** SQLite database interactions */
+/** SQLite database interactions with items*/
 import db from '../config/db';
 
 interface Product {
