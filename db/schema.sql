@@ -7,15 +7,21 @@ CREATE TABLE IF NOT EXISTS activity (
     name TEXT
 );
 
+-- DROP TABLE IF EXISTS buyer;
+
 CREATE TABLE IF NOT EXISTS buyer (
     id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL, -- add this line for auth
+    email TEXT UNIQUE NOT NULL, -- add this line for auth
+    password TEXT NOT NULL,  -- Store the hashed and salted password here
+    role TEXT DEFAULT 'user', -- add this column for authorization in a future
     location INTEGER,
     transactions INTEGER,
     reviews INTEGER,
     CONSTRAINT fk_buyer_location FOREIGN KEY (location) REFERENCES location(id)
 );
 
--- DROP TABLE IF EXISTS location;
+
 
 CREATE TABLE IF NOT EXISTS location (
     id INTEGER PRIMARY KEY,
@@ -44,8 +50,6 @@ CREATE TABLE IF NOT EXISTS order_item (
     CONSTRAINT fk_order_item_product FOREIGN KEY (product) REFERENCES product(id),
     CONSTRAINT fk_order_item_order FOREIGN KEY ("transaction") REFERENCES "order"(id)
 );
-
--- DROP TABLE IF EXISTS dummytable;
 
 CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY,
