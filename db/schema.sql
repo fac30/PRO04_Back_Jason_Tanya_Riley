@@ -65,4 +65,13 @@ CREATE TABLE IF NOT EXISTS products (
     CONSTRAINT fk_product_location FOREIGN KEY (location) REFERENCES location(id),
     CONSTRAINT fk_product_activity FOREIGN KEY (activities) REFERENCES activity(id)
 );
+
+CREATE TABLE IF NOT EXISTS SESSION (
+id INTEGER PRIMARY KEY,
+user_id INTEGER NOT NULL,
+token TEXT UNIQUE NOT NULL
+expires_at DATETIME NOT NULL
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+CONSTRAINT fk_session_user FOREIGN KEY (user_id) REFERENCES buyer(id)
+);
 -- WHEN "CREATE TABLE" IS FILLED, JUST RUN THE COMMAND: ts-node src/models/dbInit.ts AND EVERYTHING TABLES will be created
