@@ -15,8 +15,11 @@
   "license": "ISC",
   "dependencies": {
     "@npmcli/fs": "^4.0.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/connect-sqlite3": "^0.9.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.0",
     "@types/sqlite3": "^3.1.11",
     "cors": "^2.8.5",
     "express": "^4.21.1",
