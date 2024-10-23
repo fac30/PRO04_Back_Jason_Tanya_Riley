@@ -6,6 +6,10 @@ import itemRoutes from './routes/itemRoutes';
 import authRoutes from './routes/authRoutes';
 import dotenv from 'dotenv';
 import path from 'path';
+import sqlite3 from 'sqlite3';
+
+// Enable verbose mode for debugging (optional)
+sqlite3.verbose();
 
 dotenv.config();
 
@@ -21,7 +25,7 @@ app.use(express.json());
 
 app.use('/', itemRoutes);
 
-const dbPath = path.resolve(__dirname, '../db/crafts_db.sqlite');
+const dbPath = path.resolve(__dirname, '../db');
 console.log('Resolved database path:', dbPath);
 
 // Middleware to parse incoming request bodies
@@ -30,8 +34,9 @@ app.use(express.urlencoded({ extended: true }));
 // Configure session middleware
 app.use(session({
   store: new SQLiteStore({
-      db: dbPath,
       table: 'sessions',
+      db: 'crafts_db',
+      dir: dbPath
   }) as session.Store,
   secret: process.env.SESSION_SECRET || 'fallback-secret-key',
   resave: false, 
