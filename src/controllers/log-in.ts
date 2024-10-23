@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { emailExists } from '../models/userModel';
+import { emailExists, getBuyerByValue } from '../models/userModel';
+import bcrypt from 'bcrypt';
 import 'express-session';
-const bcrypt = require('bcrypt');
+
 
 declare module 'express-session' {
     interface SessionData {
@@ -17,12 +18,11 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
 
     try {
         const buyerExists = await emailExists(email);
-
         if (!buyerExists) {
             res.status(400).send("<h1>User not found</h1>");
             return;
         }
-				const buyer = await getBuyerByValue(email);
+		const buyer = await getBuyerByValue(email);
 
         const match = await bcrypt.compare(password, buyer.password); 
 
