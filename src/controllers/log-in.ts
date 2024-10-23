@@ -1,10 +1,16 @@
 import { Request, Response } from 'express';
-import { createSession } from '../models/sessionModel'; 
 import { emailExists } from '../models/userModel';
-const SQLiteStore = require('connect-sqlite3')(session);
-const sessionExp = require('express-session');
+import 'express-session';
 const bcrypt = require('bcrypt');
 
+declare module 'express-session' {
+    interface SessionData {
+        user: {
+            id: number;
+            email: string;
+        };
+    }
+}
 
 export const logIn = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
@@ -16,21 +22,17 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
             res.status(400).send("<h1>User not found</h1>");
             return;
         }
-
-        const match = await bcrypt.compare(password, user.password); 
+        const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
             res.status(400).send("<h1>Login failed</h1>");
             return;
         }
-        const sessionId = await createSession(user.id);
-        res.cookie('sid', sessionId, {
-            signed: true,
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-            httpOnly: true,
-            sameSite: 'lax'
-        });
-        res.redirect(`/dashboard`); // change when will be ready
+        req.session.user = {
+            id: user.id,
+            email: user.email,
+        };
+        res.redirect('/dashboard'); // change it 
 
     } catch (error) {
         console.error('Error during login:', error);

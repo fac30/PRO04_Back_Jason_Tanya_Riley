@@ -15,7 +15,6 @@ app.use(express.json());
 app.use('/', itemRoutes);
 app.use('/auth', authRoutes);
 
-
 // Define routes
 app.get('/', (req: Request, res: Response): void => {
   res.send('Successful response.');
