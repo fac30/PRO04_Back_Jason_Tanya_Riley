@@ -32,7 +32,7 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
             id: user.id,
             email: user.email,
         };
-        res.redirect('/dashboard'); // change it 
+        //res.redirect('/dashboard'); // change it 
 
     } catch (error) {
         console.error('Error during login:', error);
