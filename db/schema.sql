@@ -15,9 +15,9 @@ CREATE TABLE IF NOT EXISTS buyer (
     email TEXT UNIQUE NOT NULL, -- add this line for auth
     password TEXT NOT NULL,  -- Store the hashed and salted password here
     role TEXT DEFAULT 'user', -- add this column for authorization in a future
-    location INTEGER,
-    transactions INTEGER,
-    reviews INTEGER,
+    location INTEGER DEFAULT 1,
+    transactions INTEGER DEFAULT 0,
+    reviews INTEGER DEFAULT 0,
     CONSTRAINT fk_buyer_location FOREIGN KEY (location) REFERENCES location(id)
 );
 
