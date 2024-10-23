@@ -4,8 +4,8 @@ import connectSqlite3 from 'connect-sqlite3';
 import cors from 'cors';
 import itemRoutes from './routes/itemRoutes';
 import authRoutes from './routes/authRoutes';
+import dotenv from 'dotenv';
 
-const dotenv = require('dotenv');
 dotenv.config();
 
 const app: Application = express();

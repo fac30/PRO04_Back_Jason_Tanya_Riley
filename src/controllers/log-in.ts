@@ -31,8 +31,8 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
             return;
         }
         req.session.user = {
-            id: user.id,
-            email: user.email,
+            id: buyer.id,
+            email: buyer.email,
         };
         //res.redirect('/dashboard'); // change it 
 
