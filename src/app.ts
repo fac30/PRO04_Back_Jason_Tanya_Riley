@@ -5,6 +5,7 @@ import cors from 'cors';
 import itemRoutes from './routes/itemRoutes';
 import authRoutes from './routes/authRoutes';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -20,13 +21,16 @@ app.use(express.json());
 
 app.use('/', itemRoutes);
 
+const dbPath = path.resolve(__dirname, '../db/crafts_db.sqlite');
+console.log('Resolved database path:', dbPath);
+
 // Middleware to parse incoming request bodies
 app.use(express.urlencoded({ extended: true }));
 
 // Configure session middleware
 app.use(session({
   store: new SQLiteStore({
-      db: '../db/crafts_db.sqlite',
+      db: dbPath,
       table: 'sessions',
   }) as session.Store,
   secret: process.env.SESSION_SECRET || 'fallback-secret-key',
