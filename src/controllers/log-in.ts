@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 const bcrypt = require('bcrypt');
 import { createSession } from '../models/sessionModel'; 
+import { emailExists } from '../models/userModel';
 //import function where is checking that email is exist in table
 
 export const logIn = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     try {
-        const user = await getUserByEmail(email);
+        const user = await emailExists(email);
 
         if (!user) {
             res.status(400).send("<h1>User not found</h1>");
