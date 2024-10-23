@@ -1,22 +1,20 @@
-/**
- * Handles Express app setup (middleware, routes, etc.) but doesn’t start the server. 
- */
 import express, { Application, Request, Response } from 'express';
+import session from 'express-session';
+import connectSqlite3 from 'connect-sqlite3';
 import cors from 'cors';
 import itemRoutes from './routes/itemRoutes';
-
-// Uncomment the lines below if you need to create new tables or seed the database
-// import './models/dbInit';
-// import './models/seed';
+import authRoutes from './routes/authRoutes';
+const signup = require("./controllers/sign-up.ts");
+const login = require("./controllers/log-in.ts");
 
 const app: Application = express();
 
-// Enable All CORS Requests
 app.use(cors());
-
 app.use(express.json()); 
 
 app.use('/', itemRoutes);
+app.use('/auth', authRoutes);
+
 
 // Define routes
 app.get('/', (req: Request, res: Response): void => {

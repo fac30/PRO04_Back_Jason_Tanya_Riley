@@ -3,7 +3,6 @@ import db from '../config/db';
 
 // create here 2 functions:
 
-// createUser
 export const createBuyer = async (email: string, hashedPassword: string): Promise<boolean> => {
     try {
       const query = 'INSERT INTO buyer (email, password) VALUES (?, ?)';
@@ -20,8 +19,6 @@ export const createBuyer = async (email: string, hashedPassword: string): Promis
     }
   }
 
-
-// getUserByEmail
 export const emailExists = async (email: string): Promise<boolean> => {
     try {
       const query = 'SELECT COUNT(*) as count FROM users WHERE email = ?';
