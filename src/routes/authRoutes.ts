@@ -4,6 +4,10 @@ import { logOut } from '../controllers/log-out';
 import { logIn } from '../controllers/log-in';
 import { signUp } from '../controllers/sign-up';
 
+// const signup = require("../controllers/sign-up.ts");
+// const login = require("../controllers/log-in.ts");
+import { signUp } from "../controllers/sign-up";
+import { logIn } from "../controllers/log-in";
 const router = express.Router();
 
 router.post('/sign-up', signUp);

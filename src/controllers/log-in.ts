@@ -16,13 +16,15 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     try {
-        const user = await emailExists(email);
+        const buyerExists = await emailExists(email);
 
-        if (!user) {
+        if (!buyerExists) {
             res.status(400).send("<h1>User not found</h1>");
             return;
         }
-        const match = await bcrypt.compare(password, user.password);
+				const buyer = await getBuyerByValue(email);
+
+        const match = await bcrypt.compare(password, buyer.password); 
 
         if (!match) {
             res.status(400).send("<h1>Login failed</h1>");
