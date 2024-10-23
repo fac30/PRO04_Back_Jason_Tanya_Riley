@@ -19,7 +19,7 @@ export const createBuyer = async (email: string, hashedPassword: string): Promis
     }
   }
 
-  export const getUserByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
+  export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
     try {
       const query = 'SELECT * FROM buyer WHERE email = ?';
       const result = await db.get(query, [email]);
