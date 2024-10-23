@@ -3,7 +3,7 @@ import db from '../config/db';
 
 // create here 2 functions:
 
-export const createBuyer = async (email: string, hashedPassword: string): Promise<boolean> => {
+export const createBuyer = async (username: string, email: string, hashedPassword: string): Promise<boolean> => {
     try {
       const query = 'INSERT INTO buyer (email, password) VALUES (?, ?)';
       const result = await db.run(query, [email, hashedPassword]);
