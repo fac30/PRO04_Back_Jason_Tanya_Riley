@@ -19,20 +19,21 @@ export const createBuyer = async (email: string, hashedPassword: string): Promis
     }
   }
 
-export const emailExists = async (email: string): Promise<boolean> => {
+  export const getUserByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
     try {
-      const query = 'SELECT COUNT(*) as count FROM users WHERE email = ?';
+      const query = 'SELECT * FROM buyer WHERE email = ?';
       const result = await db.get(query, [email]);
-      
-      // Check if result is defined and has a 'count' property
-      if (result && typeof result === 'object' && 'count' in result) {
-        return (result as { count: number }).count > 0;
+      if (result && typeof result === 'object' && 'id' in result && 'email' in result && 'password' in result) {
+        return {
+          id: result.id as number,
+          email: result.email as string,
+          password: result.password as string
+        };
       } else {
-        console.error('Unexpected result format:', result);
-        return false;
+        return null;
       }
     } catch (error) {
-      console.error('Error checking if email exists:', error);
+      console.error('Error fetching user by email:', error);
       throw error;
     }
   }
