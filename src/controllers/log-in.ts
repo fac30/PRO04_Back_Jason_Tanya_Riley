@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
-const bcrypt = require('bcrypt');
 import { createSession } from '../models/sessionModel'; 
 import { emailExists } from '../models/userModel';
-//import function where is checking that email is exist in table
+const SQLiteStore = require('connect-sqlite3')(session);
+const sessionExp = require('express-session');
+const bcrypt = require('bcrypt');
+
 
 export const logIn = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
