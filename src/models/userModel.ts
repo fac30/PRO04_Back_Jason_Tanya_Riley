@@ -33,7 +33,7 @@ export const createBuyer = async (username: string, email: string, hashedPasswor
 
 export const emailExists = async (email: string): Promise<boolean> => {
 	try {
-		const query = 'SELECT COUNT(*) as count FROM users WHERE email = ?';
+		const query = 'SELECT COUNT(*) as count FROM buyer WHERE email = ?';
 		const result = await db.get(query, [email]);
 		
 		// Check if result is defined and has a 'count' property
@@ -67,19 +67,23 @@ export const getBuyerByValue = async (value: string): Promise<Buyer> => {
 
 export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
     try {
-      const query = 'SELECT * FROM buyer WHERE email = ?';
-      const result = await db.get(query, [email]);
-      if (result && typeof result === 'object' && 'id' in result && 'email' in result && 'password' in result) {
-        return {
-          id: result.id as number,
-          email: result.email as string,
-          password: result.password as string
-        };
-      } else {
-        return null;
-      }
+        const query = 'SELECT * FROM buyer WHERE email = ?';
+        console.log('Executing query:', query, 'with email:', email);  // Log the query and the email
+        const result = await db.get(query, [email]);
+
+        console.log('Query result:', result);  // Log the result
+
+        if (result && typeof result === 'object' && 'id' in result && 'email' in result && 'password' in result) {
+            return {
+                id: result.id as number,
+                email: result.email as string,
+                password: result.password as string
+            };
+        } else {
+            return null;
+        }
     } catch (error) {
-      console.error('Error fetching user by email:', error);
-      throw error;
+        console.error('Error fetching user by email:', error);
+        throw error;
     }
-  }
+};
