@@ -64,19 +64,6 @@ export const getBuyerByValue = async (value: string): Promise<Buyer> => {
 
 
 
-// const getProductById = (id: number): Promise<Product | undefined> => {
-//   return new Promise((resolve, reject) => {
-//     const query = 'SELECT * FROM products WHERE id = ?';
-    
-//     db.get(query, [id], (err: Error | null, row: Product | undefined) => {
-//       if (err) {
-//         reject(err);
-//       } else {
-//         resolve(row);
-//       }
-//     });
-//   });
-// };
   export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
     try {
       const query = 'SELECT * FROM buyer WHERE email = ?';
