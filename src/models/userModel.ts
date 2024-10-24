@@ -97,7 +97,6 @@ export const createBuyer = async (username: string, email: string, hashedPasswor
 
 export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
     const query = 'SELECT * FROM buyer WHERE email = ? COLLATE NOCASE';
-    console.log('Executing query:', query, 'with email:', email);
 
     return new Promise((resolve, reject) => {
         db.get(query, [email], function (err, row: BuyerRow | undefined) {
