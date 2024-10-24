@@ -17,26 +17,29 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     try {
-		const buyer = await getBuyerByEmail(email);
-        console.log("Answer from getBuyerByEmail:", buyer)
-        
+        const buyer = await getBuyerByEmail(email);
         if (!buyer) {
-            res.status(400).send("<h1>User not found</h1>");
+            res.status(404).json({ message: 'User not found' });
             return;
         }
-        const match = await bcrypt.compare(password, buyer.password); 
+
+        const match = await bcrypt.compare(password, buyer.password);
+
         if (!match) {
-            res.status(400).send("<h1>Login failed.</h1>");
+            res.status(401).json({ message: 'Login failed: Incorrect password.' });
             return;
         }
+
         req.session.user = {
             id: buyer.id,
             email: buyer.email,
         };
-        //res.redirect('/dashboard'); // change it 
+
+        res.status(200).json({ message: 'Login successful', user: { id: buyer.id, email: buyer.email } });
+        return;
 
     } catch (error) {
         console.error('Error during login:', error);
-        res.status(500).send('Server error during login');
+        res.status(500).json({ message: 'Server error during login' });
     }
 };
