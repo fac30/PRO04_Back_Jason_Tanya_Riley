@@ -36,16 +36,16 @@ app.use(session({
   store: new SQLiteStore({
       table: 'sessions',
       db: 'crafts_db',
-      dir: dbPath
+      dir: dbPath,
   }) as session.Store,
   secret: process.env.SESSION_SECRET || 'fallback-secret-key',
-  resave: false, 
+  resave: false,
   saveUninitialized: false,
   cookie: {
       maxAge: 1000 * 60 * 60 * 24, // 1 day
-      secure: false, // Set true if using HTTPS in production
+      secure: false, // Set to true if you're using HTTPS in production
       httpOnly: true,
-      sameSite: 'lax', // Protect against CSRF
+      sameSite: 'lax',
   }
 }));
 
