@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS activity (
 -- DROP TABLE IF EXISTS buyer;
 
 CREATE TABLE IF NOT EXISTS buyer (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL, -- add this line for auth
     email TEXT UNIQUE NOT NULL, -- add this line for auth
     password TEXT NOT NULL,  -- Store the hashed and salted password here
