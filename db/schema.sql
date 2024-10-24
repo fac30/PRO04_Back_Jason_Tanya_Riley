@@ -67,11 +67,9 @@ CREATE TABLE IF NOT EXISTS products (
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
-	id INTEGER PRIMARY KEY,
-	buyer_id INTEGER NOT NULL,
-	expires_at DATETIME NOT NULL,
-	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT fk_session_user FOREIGN KEY (buyer_id) REFERENCES buyer(id)
+    sid TEXT PRIMARY KEY,        -- Session ID
+    sess TEXT,                   -- Session data (contains user ID and other data)
+    expire INTEGER              -- Expiry timestamp
 );
 
 -- WHEN "CREATE TABLE" IS FILLED, JUST RUN THE COMMAND: ts-node src/models/dbInit.ts AND EVERYTHING TABLES will be created

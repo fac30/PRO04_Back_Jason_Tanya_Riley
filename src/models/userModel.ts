@@ -60,18 +60,4 @@ export const getBuyerByValue = async (value: string): Promise<Buyer> => {
 			}
 		});
 	})
-}
-
-// const getProductById = (id: number): Promise<Product | undefined> => {
-//   return new Promise((resolve, reject) => {
-//     const query = 'SELECT * FROM products WHERE id = ?';
-    
-//     db.get(query, [id], (err: Error | null, row: Product | undefined) => {
-//       if (err) {
-//         reject(err);
-//       } else {
-//         resolve(row);
-//       }
-//     });
-//   });
-// };
+};
