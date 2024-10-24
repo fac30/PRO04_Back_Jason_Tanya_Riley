@@ -60,7 +60,9 @@ export const getBuyerByValue = async (value: string): Promise<Buyer> => {
 			}
 		});
 	})
-}
+};
+
+
 
 // const getProductById = (id: number): Promise<Product | undefined> => {
 //   return new Promise((resolve, reject) => {
