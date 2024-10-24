@@ -13,20 +13,23 @@ interface Buyer {
 }
 
 export const createBuyer = async (username: string, email: string, hashedPassword: string): Promise<boolean> => {
-	try {
-		const query = 'INSERT INTO buyer (email, password) VALUES (?, ?)';
-		const result = await db.run(query, [email, hashedPassword]);
-		if (result && typeof result === 'object' && 'id' in result) {
-			return (result.id as number) > 0;
-		} else {
-			console.error('Failed to create user: Unexpected result format');
-			return false;
-		}
-	} catch (error) {
-		console.error('Error creating user:', error);
-		return false;
-	}
-}
+    const query = 'INSERT INTO buyer (name, email, password) VALUES (?, ?, ?)';
+
+    return new Promise((resolve, reject) => {
+        db.run(query, [username, email, hashedPassword], function (err) {
+            if (err) {
+                console.error('Error creating user:', err);
+                return reject(false);
+            }
+            if (this.lastID) {
+                resolve(true);
+            } else {
+                console.error('Failed to create user: No lastID');
+                resolve(false);
+            }
+        });
+    });
+};
 
 export const emailExists = async (email: string): Promise<boolean> => {
 	try {
@@ -61,3 +64,22 @@ export const getBuyerByValue = async (value: string): Promise<Buyer> => {
 		});
 	})
 };
+
+export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
+    try {
+      const query = 'SELECT * FROM buyer WHERE email = ?';
+      const result = await db.get(query, [email]);
+      if (result && typeof result === 'object' && 'id' in result && 'email' in result && 'password' in result) {
+        return {
+          id: result.id as number,
+          email: result.email as string,
+          password: result.password as string
+        };
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching user by email:', error);
+      throw error;
+    }
+  }
