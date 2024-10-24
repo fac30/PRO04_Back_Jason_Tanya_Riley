@@ -61,3 +61,24 @@ export const getBuyerByValue = async (value: string): Promise<Buyer> => {
 		});
 	})
 };
+
+
+
+  export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
+    try {
+      const query = 'SELECT * FROM buyer WHERE email = ?';
+      const result = await db.get(query, [email]);
+      if (result && typeof result === 'object' && 'id' in result && 'email' in result && 'password' in result) {
+        return {
+          id: result.id as number,
+          email: result.email as string,
+          password: result.password as string
+        };
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching user by email:', error);
+      throw error;
+    }
+  }
