@@ -31,47 +31,48 @@ export const createBuyer = async (username: string, email: string, hashedPasswor
     });
 };
 
-export const emailExists = async (email: string): Promise<boolean> => {
-	try {
-		const query = 'SELECT COUNT(*) as count FROM buyer WHERE email = ?';
-		const result = await db.get(query, [email]);
+// export const emailExists = async (email: string): Promise<boolean> => {
+// 	try {
+// 		const query = 'SELECT COUNT(*) as count FROM buyer WHERE email = ?';
+// 		const result = await db.get(query, [email]);
 		
-		// Check if result is defined and has a 'count' property
-		if (result && typeof result === 'object' && 'count' in result) {
-			return (result as { count: number }).count > 0;
-		} else {
-			console.error('Unexpected result format:', result);
-			return false;
-		}
-	} catch (error) {
-		console.error('Error checking if email exists:', error);
-		throw error;
-	}
-}
+// 		// Check if result is defined and has a 'count' property
+// 		if (result && typeof result === 'object' && 'count' in result) {
+// 			return (result as { count: number }).count > 0;
+// 		} else {
+// 			console.error('Unexpected result format:', result);
+// 			return false;
+// 		}
+// 	} catch (error) {
+// 		console.error('Error checking if email exists:', error);
+// 		throw error;
+// 	}
+// }
 
-export const getBuyerByValue = async (value: string): Promise<Buyer> => {
-	const column = 'email'; /* later I'll add a switch statement to change this  */
+// export const getBuyerByValue = async (value: string): Promise<Buyer> => {
+// 	const column = 'email'; /* later I'll add a switch statement to change this  */
 	
-	const query = `SELECT * FROM buyer WHERE ${column} = ?`;
+// 	const query = `SELECT * FROM buyer WHERE ${column} = ?`;
 
-	return new Promise((resolve, reject) => {
-		db.get(query, [value], (err: Error | null, row: Buyer) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(row)
-			}
-		});
-	})
-};
+// 	return new Promise((resolve, reject) => {
+// 		db.get(query, [value], (err: Error | null, row: Buyer) => {
+// 			if (err) {
+// 				reject(err);
+// 			} else {
+// 				resolve(row)
+// 			}
+// 		});
+// 	})
+// };
 
 export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
     try {
-        const query = 'SELECT * FROM buyer WHERE email = ?';
+        const query = 'SELECT * FROM buyer WHERE email = ? COLLATE NOCASE';
         console.log('Executing query:', query, 'with email:', email);  // Log the query and the email
+        
+		// Use db.get() directly without awaiting db itself (ensure db is initialized properly)
         const result = await db.get(query, [email]);
-
-        console.log('Query result:', result);  // Log the result
+		console.log('Query result:', result);
 
         if (result && typeof result === 'object' && 'id' in result && 'email' in result && 'password' in result) {
             return {

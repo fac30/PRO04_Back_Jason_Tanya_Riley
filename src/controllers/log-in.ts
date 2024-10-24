@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { emailExists, getBuyerByValue, getBuyerByEmail } from '../models/userModel';
+import { getBuyerByEmail } from '../models/userModel';
 import bcrypt from 'bcrypt';
 import 'express-session';
 
@@ -18,6 +18,8 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
 
     try {
 		const buyer = await getBuyerByEmail(email);
+        console.log("Answer from getBuyerByEmail:", buyer)
+        
         if (!buyer) {
             res.status(400).send("<h1>User not found</h1>");
             return;
