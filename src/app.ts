@@ -18,7 +18,7 @@ const app: Application = express();
 const SQLiteStore = connectSqlite3(session);
 
 app.use(cors({
-  origin: 'http://localhost:3001',
+  origin: 'http://localhost:5173',
   credentials: true,
 }));
 app.use(express.json()); 
