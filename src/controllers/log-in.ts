@@ -22,9 +22,7 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
             res.status(404).json({ message: 'User not found' });
             return;
         }
-
         const match = await bcrypt.compare(password, buyer.password);
-
         if (!match) {
             res.status(401).json({ message: 'Login failed: Incorrect password.' });
             return;
