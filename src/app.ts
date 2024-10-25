@@ -8,17 +8,13 @@ import dotenv from 'dotenv';
 import path from 'path';
 import sqlite3 from 'sqlite3';
 
-// Enable verbose mode for debugging (optional)
 sqlite3.verbose();
-
 dotenv.config();
 
 const app: Application = express();
-
 const SQLiteStore = connectSqlite3(session);
 
 app.use(cors({
-  origin: 'http://localhost:5173',
   credentials: true,
 }));
 app.use(express.json()); 
@@ -42,7 +38,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      maxAge: 1000 * 60 * 60 * 24,
       secure: false, // Set to true if you're using HTTPS in production
       httpOnly: true,
       sameSite: 'lax',
