@@ -109,7 +109,5 @@
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
-  "typeRoots": ["./node_modules/@types", "./types"],
-  "experimentalDecorators": true,
-  "emitDecoratorMetadata": true
+  "typeRoots": ["./node_modules/@types", "./types"]
 }

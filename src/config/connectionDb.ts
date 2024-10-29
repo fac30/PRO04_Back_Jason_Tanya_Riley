@@ -1,14 +1,23 @@
-import { Sequelize } from 'sequelize-typescript';
-require('dotenv').config();
+const { Pool } = require('pg');
+import dotenv from 'dotenv';
 
-const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PW,
-    {
-      host: 'localhost',
-      dialect: 'postgres'
-    },
-  );
+dotenv.config();
 
-export default sequelize;
+const pool = new Pool({
+   connect_string: process.env.DB_URL,
+   ssl: {
+    rejectUnauthorized: false,
+   },
+});
+
+pool.connect()
+    .then(() => console.log('Connected to Postgres on Render'))
+    .catch((err: unknown) => {
+    if (err instanceof Error) {
+        console.error('DB connection error:', err.message);
+    } else {
+        console.error('DB connection error:', err);
+    }
+    });
+
+export default pool;
