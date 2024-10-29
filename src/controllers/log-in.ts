@@ -28,10 +28,17 @@ export const logIn = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        req.session.user = {
-            id: buyer.id,
-            email: buyer.email
-        };
+        // Ensure req.session exists before assigning user data
+        if (req.session) {
+            req.session.user = {
+                id: buyer.id,
+                email: buyer.email
+            };
+        } else {
+            console.error('Session not initialized');
+            res.status(500).json({ message: 'Session not initialized' });
+            return;
+        }
 
         res.status(200).json({ 
             message: 'Login successful', 
