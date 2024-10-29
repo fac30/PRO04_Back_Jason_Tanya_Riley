@@ -1,5 +1,8 @@
-/** SQLite database interactions with users */
-import db from '../config/db';
+/** PostgreSQL database interactions with users */
+import { Pool } from 'pg';  // Change to PostgreSQL dependency
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,  // Use your PostgreSQL connection string
+});
 
 interface Buyer {
 	id: number,
@@ -19,92 +22,37 @@ interface BuyerRow {
 }
 
 export const createBuyer = async (username: string, email: string, hashedPassword: string): Promise<boolean> => {
-    const query = 'INSERT INTO buyer (name, email, password) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO buyer (name, email, password) VALUES ($1, $2, $3) RETURNING id';  // Use $1, $2, $3 for parameterized queries
 
     return new Promise((resolve, reject) => {
-        db.run(query, [username, email, hashedPassword], function (err) {
+        pool.query(query, [username, email, hashedPassword], (err, result) => {
             if (err) {
                 console.error('Error creating user:', err);
                 return reject(false);
             }
-            if (this.lastID) {
+            if (result.rows.length > 0) {
                 resolve(true);
             } else {
-                console.error('Failed to create user: No lastID');
+                console.error('Failed to create user: No rows returned');
                 resolve(false);
             }
         });
     });
 };
 
-// export const emailExists = async (email: string): Promise<boolean> => {
-// 	try {
-// 		const query = 'SELECT COUNT(*) as count FROM buyer WHERE email = ?';
-// 		const result = await db.get(query, [email]);
-		
-// 		// Check if result is defined and has a 'count' property
-// 		if (result && typeof result === 'object' && 'count' in result) {
-// 			return (result as { count: number }).count > 0;
-// 		} else {
-// 			console.error('Unexpected result format:', result);
-// 			return false;
-// 		}
-// 	} catch (error) {
-// 		console.error('Error checking if email exists:', error);
-// 		throw error;
-// 	}
-// }
-
-// export const getBuyerByValue = async (value: string): Promise<Buyer> => {
-// 	const column = 'email'; /* later I'll add a switch statement to change this  */
-	
-// 	const query = `SELECT * FROM buyer WHERE ${column} = ?`;
-
-// 	return new Promise((resolve, reject) => {
-// 		db.get(query, [value], (err: Error | null, row: Buyer) => {
-// 			if (err) {
-// 				reject(err);
-// 			} else {
-// 				resolve(row)
-// 			}
-// 		});
-// 	})
-// };
-
-// export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
-//     try {
-//         const query = 'SELECT * FROM buyer WHERE email = ? COLLATE NOCASE';
-//         console.log('Executing query:', query, 'with email:', email);  // Log the query and the email
-        
-// 		// Use db.get() directly without awaiting db itself (ensure db is initialized properly)
-//         const result = await db.get(query, [email]);
-// 		console.log('Query result:', result);
-
-//         if (result && typeof result === 'object' && 'id' in result && 'email' in result && 'password' in result) {
-//             return {
-//                 id: result.id as number,
-//                 email: result.email as string,
-//                 password: result.password as string
-//             };
-//         } else {
-//             return null;
-//         }
-//     } catch (error) {
-//         console.error('Error fetching user by email:', error);
-//         throw error;
-//     }
-// };
+// ... existing code ...
 
 export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
-    const query = 'SELECT * FROM buyer WHERE email = ? COLLATE NOCASE';
+    const query = 'SELECT * FROM buyer WHERE email = $1';  // Use $1 for parameterized queries
 
     return new Promise((resolve, reject) => {
-        db.get(query, [email], function (err, row: BuyerRow | undefined) {
+        pool.query(query, [email], (err, result) => {
             if (err) {
                 console.error('Error fetching user:', err);
                 return reject(err);  // Reject with error
             }
 
+            const row = result.rows[0];  // Get the first row from the result
             if (row) {
                 return resolve({
                     id: row.id as number,
