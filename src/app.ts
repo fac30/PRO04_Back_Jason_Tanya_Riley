@@ -17,6 +17,9 @@ app.use(cors({
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/', itemRoutes);
+app.use('/', authRoutes);
+
 // Set up session middleware to use PostgreSQL as the session store
 app.use(session({
   store: new (pgSession(session))({
