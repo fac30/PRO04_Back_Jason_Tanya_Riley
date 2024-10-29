@@ -4,6 +4,8 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import itemRoutes from './routes/itemRoutes';
 import authRoutes from './routes/authRoutes';
+import pool from './config/connectionDb';
+
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -19,14 +21,15 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json()); 
-
-app.use('/', itemRoutes);
-
-const dbPath = path.resolve(__dirname, '../db');
-console.log('Resolved database path:', dbPath);
-
+//app.use('/', itemRoutes);
+//app.use('/auth', authRoutes);
 // Middleware to parse incoming request bodies
 app.use(express.urlencoded({ extended: true }));
+
+// const dbPath = path.resolve(__dirname, '../db');
+// console.log('Resolved database path:', dbPath);
+
+
 
 // // Configure session middleware
 // app.use(session({
@@ -46,9 +49,18 @@ app.use(express.urlencoded({ extended: true }));
 //   }
 // }));
 
-app.use('/auth', authRoutes);
+// Define a test route to verify DB connection
+app.get('/db-test', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const result = await pool.query('SELECT NOW()'); // Test query to check DB connection
+    res.json({ message: 'Database connection successful!', time: result.rows[0] });
+  } catch (err) {
+    console.error('Error querying the database:', err);
+    res.status(500).json({ error: 'Database connection failed' });
+  }
+});
 
-// Define routes
+// Define root route
 app.get('/', (req: Request, res: Response): void => {
   res.send('Successful response.');
 });
