@@ -28,11 +28,15 @@
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "glob": "^11.0.0",
-    "rimraf": "^6.0.1",
+    "pg": "^8.13.1",
+    "postgres": "^3.4.5",
+    "reflect-metadata": "^0.2.2",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "@types/node": "^22.7.5",
+    "@types/node": "^22.8.2",
+    "@types/pg": "^8.11.10",
+    "@types/validator": "^13.12.2",
     "copyfiles": "^2.4.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
