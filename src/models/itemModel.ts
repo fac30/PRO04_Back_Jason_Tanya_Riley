@@ -1,8 +1,4 @@
-
-import { Pool } from 'pg'; // Import PostgreSQL client
-const pool = new Pool({
-  connectionString: 'your_connection_string_here', // Update with your PostgreSQL connection string
-});
+import pool from '../config/connectionDb';
 
 interface Product {
   id?: number;
@@ -12,25 +8,37 @@ interface Product {
 }
 
 // Function to get all products
-const getAllProducts = (): Promise<Product[]> => {
-  return pool.query('SELECT * FROM products') //
-    .then(result => result.rows) 
-    .catch(err => Promise.reject(err));
+const getAllProducts = async (): Promise<Product[]> => {
+  try {
+    const result = await pool.query('SELECT * FROM products');
+    return result.rows;
+  } catch (err) {
+    throw new Error(`Error fetching all products: ${(err as Error).message}`);
+  }
 };
 
 // Function to get a single product by ID
-const getProductById = (id: number): Promise<Product | undefined> => {
-  return pool.query('SELECT * FROM products WHERE id = $1', [id]) 
-    .then(result => result.rows[0]) 
-    .catch(err => Promise.reject(err));
+const getProductById = async (id: number): Promise<Product | null> => {
+  try {
+    const result = await pool.query('SELECT * FROM products WHERE id = $1', [id]);
+    return result.rows[0] || null;
+  } catch (err) {
+    throw new Error(`Error fetching product by ID: ${(err as Error).message}`);
+  }
 };
 
 // Function to add a new product
-const addProduct = (product: Omit<Product, 'id'>): Promise<number> => {
+const addProduct = async (product: Omit<Product, 'id'>): Promise<number> => {
   const { name, description, price } = product;
-  return pool.query('INSERT INTO products (name, description, price) VALUES ($1, $2, $3) RETURNING id', [name, description, price]) // Use RETURNING to get the new ID
-    .then(result => result.rows[0].id) 
-    .catch(err => Promise.reject(err));
+  try {
+    const result = await pool.query(
+      'INSERT INTO products (name, description, price) VALUES ($1, $2, $3) RETURNING id',
+      [name, description, price]
+    );
+    return result.rows[0].id;
+  } catch (err) {
+    throw new Error(`Error adding new product: ${(err as Error).message}`);
+  }
 };
 
 export {
