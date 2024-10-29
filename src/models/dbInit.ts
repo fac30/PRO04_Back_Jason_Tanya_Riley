@@ -19,4 +19,9 @@ const initializeDatabase = async (): Promise<void> => {
 
 export default initializeDatabase;
 
-psql -h dpg-csgc7j5ds78s7381p9i0-a.region.render.com -p 5432 -U gurtati -d crafts_db_crafts
+//copy and run this command in your terminal to open and see the structure of our Database: 
+
+//psql postgresql://gurtati:3Y5ehHGyJ0zXBj14DQhfeSWdpqkicOdr@dpg-csgc7j5ds78s7381p9i0-a.frankfurt-postgres.render.com/crafts_db_crafts
+//this is a command to see the whole list of tables: \dt
+//to see the specific table: \d <table_name>
+//to quit from this mode: \q

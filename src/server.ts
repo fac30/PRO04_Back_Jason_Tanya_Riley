@@ -4,8 +4,8 @@ import initializeDatabase from './models/dbInit';
 
 const port: number = parseInt(process.env.PORT || '3000', 10);
 
-// Initialize the database tables
-initializeDatabase();
+// // Initialize the database tables
+// initializeDatabase();
 
 // Start the server
 app.listen(port, () => {
