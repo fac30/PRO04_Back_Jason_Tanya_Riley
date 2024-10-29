@@ -8,7 +8,7 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
     try {
         const hashedPass = await bcrypt.hash(password, 12);
 
-        await createBuyer(username, email, hashedPass); //import from userModel.ts
+        await createBuyer(username, email, hashedPass);
 
         res.status(201).send('User created successfully. Please log in.');
     } catch (error) {
