@@ -1,5 +1,5 @@
-/** SQLite database interactions with users */
-import db from '../config/db';
+/** Postgres database interactions with users */
+import pool from './config/connectionDb';
 
 interface Buyer {
 	id: number,
@@ -37,66 +37,10 @@ export const createBuyer = async (username: string, email: string, hashedPasswor
     });
 };
 
-// export const emailExists = async (email: string): Promise<boolean> => {
-// 	try {
-// 		const query = 'SELECT COUNT(*) as count FROM buyer WHERE email = ?';
-// 		const result = await db.get(query, [email]);
-		
-// 		// Check if result is defined and has a 'count' property
-// 		if (result && typeof result === 'object' && 'count' in result) {
-// 			return (result as { count: number }).count > 0;
-// 		} else {
-// 			console.error('Unexpected result format:', result);
-// 			return false;
-// 		}
-// 	} catch (error) {
-// 		console.error('Error checking if email exists:', error);
-// 		throw error;
-// 	}
-// }
-
-// export const getBuyerByValue = async (value: string): Promise<Buyer> => {
-// 	const column = 'email'; /* later I'll add a switch statement to change this  */
-	
-// 	const query = `SELECT * FROM buyer WHERE ${column} = ?`;
-
-// 	return new Promise((resolve, reject) => {
-// 		db.get(query, [value], (err: Error | null, row: Buyer) => {
-// 			if (err) {
-// 				reject(err);
-// 			} else {
-// 				resolve(row)
-// 			}
-// 		});
-// 	})
-// };
-
-// export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
-//     try {
-//         const query = 'SELECT * FROM buyer WHERE email = ? COLLATE NOCASE';
-//         console.log('Executing query:', query, 'with email:', email);  // Log the query and the email
-        
-// 		// Use db.get() directly without awaiting db itself (ensure db is initialized properly)
-//         const result = await db.get(query, [email]);
-// 		console.log('Query result:', result);
-
-//         if (result && typeof result === 'object' && 'id' in result && 'email' in result && 'password' in result) {
-//             return {
-//                 id: result.id as number,
-//                 email: result.email as string,
-//                 password: result.password as string
-//             };
-//         } else {
-//             return null;
-//         }
-//     } catch (error) {
-//         console.error('Error fetching user by email:', error);
-//         throw error;
-//     }
-// };
 
 export const getBuyerByEmail = async (email: string): Promise<{ id: number; email: string; password: string } | null> => {
     const query = 'SELECT * FROM buyer WHERE email = ? COLLATE NOCASE';
+    console.log('Executing query:', query, 'with email:', email);
 
     return new Promise((resolve, reject) => {
         db.get(query, [email], function (err, row: BuyerRow | undefined) {

@@ -21,3 +21,15 @@ export const logOut = async (req: Request, res: Response): Promise<void> => {
         res.status(500).send('Server error during log out');
     }
 };
+
+// export const logoutUser = (req: Request, res: Response) => {
+//     req.session.destroy((err) => {
+//       if (err) {
+//         console.error('Error logging out:', err);
+//         return res.status(500).json({ message: 'Logout failed' });
+//       }
+  
+//       res.clearCookie('connect.sid'); // Clears the session cookie from the client
+//       res.status(200).json({ message: 'Logout successful' });
+//     });
+//   };
