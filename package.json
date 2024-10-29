@@ -28,15 +28,14 @@
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "glob": "^11.0.0",
+    "pg": "^8.13.1",
     "postgres": "^3.4.5",
     "reflect-metadata": "^0.2.2",
-    "rimraf": "^6.0.1",
-    "sequelize": "^6.37.5",
-    "sequelize-typescript": "^2.1.6",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@types/node": "^22.8.2",
+    "@types/pg": "^8.11.10",
     "@types/validator": "^13.12.2",
     "copyfiles": "^2.4.1",
     "ts-node": "^10.9.2",

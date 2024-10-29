@@ -7,6 +7,9 @@ import authRoutes from './routes/authRoutes';
 import dotenv from 'dotenv';
 import path from 'path';
 import sqlite3 from 'sqlite3';
+import { Sequelize } from 'sequelize-typescript';
+//import sequelize  from './config/connectionDb';
+
 
 sqlite3.verbose();
 dotenv.config();
@@ -45,6 +48,22 @@ app.use(session({
       sameSite: 'lax',
   }
 }));
+
+let sequelize;
+
+if (process.env.DB_URL) {
+  sequelize = new Sequelize(process.env.DB_URL);
+} else {
+  sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PW,
+    {
+      host: 'localhost',
+      dialect: 'postgres',
+    },
+  );
+}
 
 app.use('/auth', authRoutes);
 
