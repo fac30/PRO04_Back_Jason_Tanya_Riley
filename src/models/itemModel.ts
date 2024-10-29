@@ -1,5 +1,8 @@
-/** SQLite database interactions with items*/
-import db from '../config/db';
+
+import { Pool } from 'pg'; // Import PostgreSQL client
+const pool = new Pool({
+  connectionString: 'your_connection_string_here', // Update with your PostgreSQL connection string
+});
 
 interface Product {
   id?: number;
@@ -10,48 +13,24 @@ interface Product {
 
 // Function to get all products
 const getAllProducts = (): Promise<Product[]> => {
-  return new Promise((resolve, reject) => {
-    const query = 'SELECT * FROM products';
-    
-    db.all(query, [], (err: Error | null, rows: Product[]) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rows);
-      }
-    });
-  });
+  return pool.query('SELECT * FROM products') //
+    .then(result => result.rows) 
+    .catch(err => Promise.reject(err));
 };
 
 // Function to get a single product by ID
 const getProductById = (id: number): Promise<Product | undefined> => {
-  return new Promise((resolve, reject) => {
-    const query = 'SELECT * FROM products WHERE id = ?';
-    
-    db.get(query, [id], (err: Error | null, row: Product | undefined) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(row);
-      }
-    });
-  });
+  return pool.query('SELECT * FROM products WHERE id = $1', [id]) 
+    .then(result => result.rows[0]) 
+    .catch(err => Promise.reject(err));
 };
 
 // Function to add a new product
 const addProduct = (product: Omit<Product, 'id'>): Promise<number> => {
-  return new Promise((resolve, reject) => {
-    const { name, description, price } = product;
-    const query = 'INSERT INTO products (name, description, price) VALUES (?, ?, ?)';
-    
-    db.run(query, [name, description, price], function(this: { lastID: number }, err: Error | null) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(this.lastID);
-      }
-    });
-  });
+  const { name, description, price } = product;
+  return pool.query('INSERT INTO products (name, description, price) VALUES ($1, $2, $3) RETURNING id', [name, description, price]) // Use RETURNING to get the new ID
+    .then(result => result.rows[0].id) 
+    .catch(err => Promise.reject(err));
 };
 
 export {
