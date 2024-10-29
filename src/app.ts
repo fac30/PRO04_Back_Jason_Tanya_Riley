@@ -17,9 +17,6 @@ app.use(cors({
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', itemRoutes);
-
-
 // Set up session middleware to use PostgreSQL as the session store
 app.use(
   session({
@@ -39,7 +36,8 @@ app.use(
   })
 );
 
-app.use('/', authRoutes);
+app.use('/auth', authRoutes);
+app.use('/', itemRoutes);
 
 // // Define a test route to verify DB connection
 // app.get('/db-test', async (req: Request, res: Response): Promise<void> => {
