@@ -11,7 +11,7 @@ dotenv.config();
 
 const app: Application = express();
 app.use(cors({
-  origin: process.env.DEPLOY_URL,
+  origin: process.env.FRONT_DEPLOY_URL,
   credentials: true,
 }));
 app.use(express.json()); 
