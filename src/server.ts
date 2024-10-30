@@ -16,5 +16,5 @@ const port: number = parseInt(process.env.PORT || '3000', 10);
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
