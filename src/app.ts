@@ -31,7 +31,7 @@ app.use(
       saveUninitialized: false,
       cookie: {
           maxAge: 1000 * 60 * 60 * 24, // 1 day
-          secure: false,               // Set to true if using HTTPS in production
+          secure: true,               // Set to true if using HTTPS in production
           httpOnly: true,
           sameSite: 'lax',
       }
